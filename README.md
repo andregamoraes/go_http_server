@@ -31,6 +31,10 @@ app/
 │   └── handler.go    # HTTP response handlers
 └── router/
     └── router.go     # Request routing and processing
+└── tests/
+    └── echo_test.go      # Tests for the echo endpoint
+    └── files_test.go     # Tests for file operations
+    └── user_agent_test.go # Tests for the user-agent endpoint
 ```
 
 ## Requirements
@@ -80,6 +84,36 @@ The server will start listening on port 4221.
 
    # Retrieve a file
    curl -v http://localhost:4221/files/hello.txt
+   ```
+
+## Testing
+
+The project includes a comprehensive test suite located in the `app/tests` directory. Tests cover all endpoints and functionality:
+
+- Echo endpoint tests
+- User-Agent endpoint tests
+- File operations tests (GET and POST)
+
+### Running Tests
+
+You can run the tests in two ways:
+
+1. Using the provided test script (recommended):
+   ```bash
+   ./test.sh
+   ```
+   This script will:
+   - Start the server in the background
+   - Run all tests
+   - Kill the server after tests complete
+
+2. Running tests directly with Go:
+   ```bash
+   go test -v ./app/tests/...
+   ```
+   Note: When running tests directly, make sure the server is running with the correct directory:
+   ```bash
+   ./http-server --directory /tmp
    ```
 
 ## Implementation Details

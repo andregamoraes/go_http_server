@@ -7,6 +7,7 @@ import (
 	"bufio"
 	"strings"
 	"io"
+	"net/url"
 )
 
 func parseHeaders(reader *bufio.Reader) map[string]string {
@@ -87,7 +88,17 @@ func handleRequest(conn net.Conn, method string, path string, headers map[string
 		handler.HandleUserAgent(conn, userAgent)
 	} else if strings.HasPrefix(path, "/echo/") {
 		echoStr := strings.TrimPrefix(path, "/echo/")
-		handler.HandleEcho(conn, echoStr)
+		if echoStr == "" {
+			handler.Handle404(conn)
+			return
+		}
+		// URL decode the echo string
+		decodedStr, err := url.QueryUnescape(echoStr)
+		if err != nil {
+			handler.Handle404(conn)
+			return
+		}
+		handler.HandleEcho(conn, decodedStr)
 	} else if strings.HasPrefix(path, "/files/") {
 		filename := strings.TrimPrefix(path, "/files/")
 		if method == "POST" {

@@ -3,6 +3,7 @@ package tests
 import (
 	"io"
 	"net/http"
+	"strconv"
 	"testing"
 )
 
@@ -56,7 +57,7 @@ func TestUserAgentEndpoint(t *testing.T) {
 				t.Errorf("Expected Content-Type text/plain, got %s", resp.Header.Get("Content-Type"))
 			}
 
-			if resp.Header.Get("Content-Length") != string(len(tt.expectBody)) {
+			if resp.Header.Get("Content-Length") != strconv.Itoa(len(tt.expectBody)) {
 				t.Errorf("Expected Content-Length %d, got %s", len(tt.expectBody), resp.Header.Get("Content-Length"))
 			}
 		})

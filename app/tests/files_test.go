@@ -10,12 +10,8 @@ import (
 )
 
 func TestFilesEndpoint(t *testing.T) {
-	// Create a temporary directory for test files
-	tempDir, err := os.MkdirTemp("", "http-server-test")
-	if err != nil {
-		t.Fatalf("Failed to create temp dir: %v", err)
-	}
-	defer os.RemoveAll(tempDir)
+	// Use /tmp directory
+	tempDir := "/tmp"
 
 	// Test file creation (POST)
 	t.Run("POST new file", func(t *testing.T) {
