@@ -22,14 +22,14 @@ func main() {
 
 	fmt.Println("Server is listening on port 4221...")
 
-	// O loop que aceita as conexões e as direciona para o roteador
+	// The loop that accepts connections and routes them to the router
 	for {
 		conn, err := server.Accept()
 		if err != nil {
 			fmt.Println("Error accepting connection:", err.Error())
 			continue
 		}
-		// Aqui chamamos o roteador
+		// Here we call the router
 		go router.HandleConnection(conn, *directory)
 	}
 }
